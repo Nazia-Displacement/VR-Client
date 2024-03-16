@@ -10,12 +10,14 @@ using UnityEngine;
 
 public class ConnectionManager : MonoBehaviour
 {
+    public static ConnectionManager instance;
     public DoorwayLight doorway;
 
     SocketIOUnity socket;
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         socket = new SocketIOUnity("https://displacementserver.isaachisey.com/", new SocketIOOptions
         {
             Query = new Dictionary<string, string>
@@ -59,8 +61,12 @@ public class ConnectionManager : MonoBehaviour
 
         socket.Connect();
         
-        Console.WriteLine("Manager Started - Con");
         Debug.Log("Manager Started - Deb");
+    }
+
+    public void UpdatePanel(float value)
+    {
+        socket.Emit("unity-panel-update-request", value);
     }
 
     // Update is called once per frame
