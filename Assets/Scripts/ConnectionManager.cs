@@ -20,7 +20,7 @@ public class ConnectionManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        socket = new SocketIOUnity("http://127.0.0.1:3001"/*"https://displacementserver.isaachisey.com/"*/, new SocketIOOptions
+        socket = new SocketIOUnity(/*"http://127.0.0.1:3001"*/"https://displacementserver.isaachisey.com/", new SocketIOOptions
         {
             Query = new Dictionary<string, string>
             {
