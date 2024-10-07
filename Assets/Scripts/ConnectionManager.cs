@@ -1,6 +1,3 @@
-using Newtonsoft.Json;
-using SocketIOClient;
-using SocketIOClient.Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +9,8 @@ using System.Security.Cryptography;
 using UnityEngine;
 using Firesplash.GameDevAssets.SocketIO;
 using Unity.VisualScripting;
-using SocketIOClient.Transport;
 using System.Text;
+using Newtonsoft.Json;
 
 public class ConnectionManager : MonoBehaviour
 {
@@ -95,7 +92,7 @@ public class ConnectionManager : MonoBehaviour
                     floorClipPlan
                 );
             }
-            catch (JsonException ex)
+            catch (Exception ex)
             {
                 Debug.LogError("JSON parsing error: " + ex.Message);
             }
