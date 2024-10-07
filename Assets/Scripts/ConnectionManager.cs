@@ -107,7 +107,7 @@ public class ConnectionManager : MonoBehaviour
             ReceivePositions(data);
         });
 
-        socket.Instance.Connect("http://127.0.0.1:3001", true, p);
+        socket.Instance.Connect("https://displacementserver.isaachisey.com", true, p);
         //socket.Instance.Connect("http://127.0.0.1:3001", true, p);
     }
 

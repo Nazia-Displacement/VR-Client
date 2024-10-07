@@ -13,8 +13,8 @@ public class KinectManager : MonoBehaviour
 {
     public Color color = Color.green;
     public bool cameraColor = true;
-    public float scale = 10f;
-    public float max_size = 0.05f;
+    public float scale = 1f;
+    public float max_size = 0.01f;
 
     [Range(0f, 1f)]
     public float mixFactor = 0.5f;
@@ -58,9 +58,9 @@ public class KinectManager : MonoBehaviour
         particleCount = 0;
         this.floorClipPlane = floorClipPlane;
 
-        for (int y = 0; y < depthHeight; y += 2)
+        for (int y = 0; y < depthHeight; y++)
         {
-            for (int x = 0; x < depthWidth; x += 2)
+            for (int x = 0; x < depthWidth; x++)
             {
                 if (particleCount >= maxParticles)
                     break;
@@ -86,7 +86,7 @@ public class KinectManager : MonoBehaviour
                             particles_a[particleCount++] = new ParticleSystem.Particle()
                             {
                                 position = new Vector3(xPoint, -yPoint, z),
-                                startColor = Color.white,
+                                startColor = (cameraColor) ? Color.Lerp(Color.white, color, mixFactor) : Color.white,
                                 startSize = max_size * (z / max_depth)
                             };
                         }
@@ -94,6 +94,7 @@ public class KinectManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Particle Count: " +  particleCount);
         _particleSystem.SetParticles(particles_a, particleCount);
     }
 

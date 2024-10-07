@@ -8,13 +8,15 @@ public class MyPlayerController : MonoBehaviour
     public Camera cam;
 
     private float gravity = -9.8f;
-    private float moveSpeed = 5f;
-    private float lookSpeed = 50f;
+    private float moveSpeed = 5.5f;
+    private float lookSpeed = 15f;
     public float maxLookAngle = 80.0f;
 
     private Vector2 smoothedMouseDelta;
     private float smoothFactor = 0.1f; // Factor for exponential smoothing
-    private float maxMouseDelta = 5f;  // Maximum allowed delta to avoid jumps
+    private float maxMouseDelta = 15f;  // Maximum allowed delta to avoid jumps
+    private float deadZone = 0.1f; // Adjust as necessary
+    private float blendFactor = 0.5f; // Adjust for responsiveness
 
     private float nextUpdate = 0;
     private float updateEvery = 0.08f;
@@ -54,7 +56,6 @@ public class MyPlayerController : MonoBehaviour
         look.y = Mathf.Clamp(look.y, -maxMouseDelta, maxMouseDelta);
 
         // Implement a dead zone
-        float deadZone = 0.1f; // Adjust as necessary
         if (Mathf.Abs(look.x) < deadZone) look.x = 0;
         if (Mathf.Abs(look.y) < deadZone) look.y = 0;
 
@@ -63,7 +64,6 @@ public class MyPlayerController : MonoBehaviour
         smoothedMouseDelta.y = Mathf.Lerp(smoothedMouseDelta.y, look.y, smoothFactor);
 
         // Blend smoothed input with raw input for responsiveness
-        float blendFactor = 0.5f; // Adjust for responsiveness
         smoothedMouseDelta.x = Mathf.Lerp(smoothedMouseDelta.x, look.x, blendFactor);
         smoothedMouseDelta.y = Mathf.Lerp(smoothedMouseDelta.y, look.y, blendFactor);
 
