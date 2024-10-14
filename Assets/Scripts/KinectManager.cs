@@ -1,17 +1,17 @@
 using UnityEngine;
-using Windows.Kinect;
-
-//fileIO
-using System.IO;
-using System.Collections.Generic;
-using static UnityEngine.EventSystems.EventTrigger;
-using Unity.Burst;
-using Unity.Collections;
-using Unity.Jobs;
 
 public class KinectManager : MonoBehaviour
 {
-    public Color color = Color.green;
+    [SerializeField]
+    public Color[] colors = 
+    {
+        Color.green,
+        Color.blue,
+        Color.red,
+        Color.yellow,
+        Color.magenta,
+        Color.cyan
+    };
     public bool cameraColor = true;
     public float scale = 1f;
     public float max_size = 0.01f;
@@ -21,21 +21,21 @@ public class KinectManager : MonoBehaviour
 
     float max_depth = 3f;
 
-    private Vector3 initialRotation;
+    public Vector3 initialRotation;
 
-    private UnityEngine.Vector4 floorClipPlane;
+    private Vector4 floorClipPlane;
 
-    private ParticleSystem _particleSystem;
+    private ParticleSystem particlesSystem;
     private int maxParticles = 217088;
     private int particleCount = 0;
-    private ParticleSystem.Particle[] particles_a;
+    private ParticleSystem.Particle[] particles;
 
     // Use this for initialization
     void Start()
     {
         initialRotation = transform.rotation.eulerAngles;
-        _particleSystem = gameObject.GetComponent<ParticleSystem>();
-        particles_a = new ParticleSystem.Particle[maxParticles];
+        particlesSystem = gameObject.GetComponent<ParticleSystem>();
+        particles = new ParticleSystem.Particle[maxParticles];
     }
 
     // Update is called once per frame
@@ -83,10 +83,10 @@ public class KinectManager : MonoBehaviour
                                 max_depth = z;
 
                             // Set particle position (or point cloud data)
-                            particles_a[particleCount++] = new ParticleSystem.Particle()
+                            particles[particleCount++] = new ParticleSystem.Particle()
                             {
                                 position = new Vector3(xPoint, -yPoint, z),
-                                startColor = (cameraColor) ? Color.Lerp(Color.white, color, mixFactor) : Color.white,
+                                startColor = (cameraColor) ? Color.Lerp(Color.white, colors[bodyIndex % colors.Length], mixFactor) : Color.white,
                                 startSize = max_size * (z / max_depth)
                             };
                         }
@@ -94,8 +94,8 @@ public class KinectManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Particle Count: " +  particleCount);
-        _particleSystem.SetParticles(particles_a, particleCount);
+        //Debug.Log("Particle Count: " +  particleCount);
+        particlesSystem.SetParticles(particles, particleCount);
     }
 
     void AlignWithFloorPlane()

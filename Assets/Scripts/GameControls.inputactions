@@ -1,0 +1,45 @@
+{
+    "name": "GameControls",
+    "maps": [
+        {
+            "name": "SwitchCam",
+            "id": "5aacdfc5-6f18-4a32-a979-0811c30556f3",
+            "actions": [
+                {
+                    "name": "Switch",
+                    "type": "Button",
+                    "id": "43f697ed-c7c9-40d6-97e4-15de30aeeeea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2dd6825-dd0d-41d4-9a20-7bd61e6d2fb4",
+                    "path": "<Keyboard>/equals",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9960dfaf-0c48-489c-9d17-8958fc5bb035",
+                    "path": "<Keyboard>/numpadEquals",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

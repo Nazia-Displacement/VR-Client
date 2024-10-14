@@ -1,14 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.IO;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using UnityEngine;
 using Firesplash.GameDevAssets.SocketIO;
-using Unity.VisualScripting;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -28,15 +23,31 @@ public class ConnectionManager : MonoBehaviour
 
     public Dictionary<string, MultiPlayerAvatar> avatars = new();
 
+    public Camera gameCam;
+    public Camera kinectCam;
+
+    private readonly bool live = false;
+    private GameControls gameControls;
+
     [Serializable]
     struct KinectData 
     {
         public string data;
     }
+
+    private struct KinectTransform {
+        [JsonProperty]
+        public Vector2 position;
+        [JsonProperty]
+        public Vector2 rotation;
+    }
     void Start()
     {
         instance = this;
         socket = gameObject.AddComponent<SocketIOCommunicator>();
+        gameControls = new GameControls();
+        gameControls.Enable();
+
         p.AddElement("token", "Nazia.Unity.Project");
 
         ///// reserved socketio events
@@ -104,8 +115,20 @@ public class ConnectionManager : MonoBehaviour
             ReceivePositions(data);
         });
 
-        socket.Instance.Connect("https://displacementserver.isaachisey.com", true, p);
-        //socket.Instance.Connect("http://127.0.0.1:3001", true, p);
+        socket.Instance.On("kinectTransform", data =>
+        {
+            data = data.Replace(@"\", "");
+            KinectTransform kt = JsonConvert.DeserializeObject<KinectTransform>(data);
+            Debug.Log($"Data: Pos: {kt.position} Rot: {kt.rotation}");
+            Vector3 kpos = kinectManager.transform.position;
+            kpos.x = kt.position.x;
+            kpos.z = kt.position.y;
+            kinectManager.transform.position = kpos;
+            kinectManager.initialRotation = new Vector3(0, kt.rotation.x, 0);
+        });
+
+        if(live) socket.Instance.Connect("https://displacementserver.isaachisey.com", true, p);
+        else socket.Instance.Connect("http://127.0.0.1:3001", true, p);
     }
 
     public void UpdatePanel(float value)
@@ -115,19 +138,21 @@ public class ConnectionManager : MonoBehaviour
 
     public void SendPosition(float x, float y, float z, float xRot, float yRot)
     {
-        // Step 1: Convert each float to a byte array
+        // Step 1: Convert the SocketID string to a byte array
+        string socketID = socket.Instance.SocketID; // Get the SocketID
+        if (socketID == null) return;
+        byte[] idBytes = Encoding.UTF8.GetBytes(socketID);
+
+        // Step 2: Convert each float to a byte array
         byte[] xBytes = BitConverter.GetBytes(x);
         byte[] yBytes = BitConverter.GetBytes(y);
         byte[] zBytes = BitConverter.GetBytes(z);
         byte[] xRotBytes = BitConverter.GetBytes(xRot);
         byte[] yRotBytes = BitConverter.GetBytes(yRot);
-
-        // Step 2: Convert the SocketID string to a byte array
-        string socketID = socket.Instance.SocketID; // Get the SocketID
-        byte[] idBytes = Encoding.UTF8.GetBytes(socketID);
+        byte[] camMode = BitConverter.GetBytes(gameCam.enabled);
 
         // Step 3: Combine the id byte array with the other byte arrays into one larger array
-        int totalLength = idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length;
+        int totalLength = idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length + camMode.Length;
         byte[] allBytes = new byte[totalLength];
 
         Buffer.BlockCopy(idBytes, 0, allBytes, 0, idBytes.Length);
@@ -136,6 +161,7 @@ public class ConnectionManager : MonoBehaviour
         Buffer.BlockCopy(zBytes, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length, zBytes.Length);
         Buffer.BlockCopy(xRotBytes, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length, xRotBytes.Length);
         Buffer.BlockCopy(yRotBytes, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length, yRotBytes.Length);
+        Buffer.BlockCopy(camMode, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length, camMode.Length);
 
         // Step 4: Compress the combined byte array
         byte[] compressedBytes;
@@ -153,42 +179,6 @@ public class ConnectionManager : MonoBehaviour
 
         // Now you can send the base64String, for example, over a network or to another system.
         socket.Instance.Emit("playerPosUpdate", base64String, true);
-    }
-
-    public void ReceivePosition(string base64String)
-    {
-        // Step 1: Convert the base64 string back to a compressed byte array
-        byte[] compressedBytes = Convert.FromBase64String(base64String);
-
-        // Step 2: Decompress the byte array
-        byte[] decompressedBytes;
-        using (var inputStream = new MemoryStream(compressedBytes))
-        {
-            using (var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    gzipStream.CopyTo(outputStream);
-                    decompressedBytes = outputStream.ToArray();
-                }
-            }
-        }
-
-        // Step 3: Extract the SocketID (20 characters)
-        int idLength = 20; // SocketID length
-        byte[] idBytes = new byte[idLength];
-        Buffer.BlockCopy(decompressedBytes, 0, idBytes, 0, idLength);
-        string socketID = Encoding.UTF8.GetString(idBytes);
-
-        // Step 4: Extract the float values
-        int floatSize = sizeof(float);
-        float x = BitConverter.ToSingle(decompressedBytes, idLength);
-        float y = BitConverter.ToSingle(decompressedBytes, idLength + floatSize);
-        float z = BitConverter.ToSingle(decompressedBytes, idLength + 2 * floatSize);
-        float xRot = BitConverter.ToSingle(decompressedBytes, idLength + 3 * floatSize);
-        float yRot = BitConverter.ToSingle(decompressedBytes, idLength + 4 * floatSize);
-
-        // Now you have the original values
     }
 
     public void ReceivePositions(string compressedData)
@@ -229,6 +219,7 @@ public class ConnectionManager : MonoBehaviour
             if (avatars.ContainsKey(socketID))
             {
                 avatars[socketID].SetTargets(new Vector3(position.x, position.y, position.z), position.xRot, position.yRot);
+                avatars[socketID].SetVisible(position.display);
             }
             else
             {
@@ -243,10 +234,17 @@ public class ConnectionManager : MonoBehaviour
         currentReconnectTimer += Time.deltaTime;
 
         if (!socket.Instance.IsConnected() && currentReconnectTimer >= reconnectTimerMax)
-            socket.Instance.Connect("http://127.0.0.1:3001", true, p);
+            if(live) socket.Instance.Connect("https://displacementserver.isaachisey.com", true, p);
+            else socket.Instance.Connect("http://127.0.0.1:3001", true, p);
 
         if (socket.Instance.IsConnected() || currentReconnectTimer >= reconnectTimerMax) 
             currentReconnectTimer = 0;
+
+        if(gameControls.SwitchCam.Switch.WasPerformedThisFrame())
+        {
+            gameCam.gameObject.SetActive(!gameCam.gameObject.activeInHierarchy);
+            kinectCam.gameObject.SetActive(!gameCam.gameObject.activeInHierarchy);
+        }
     }
 
     private static void DecompressAndExtractFrames(
@@ -321,4 +319,5 @@ public class PlayerPosition
     public float z { get; set; }
     public float xRot { get; set; }
     public float yRot { get; set; }
+    public bool display { get; set; }
 }

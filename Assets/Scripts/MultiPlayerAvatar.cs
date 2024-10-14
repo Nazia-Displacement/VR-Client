@@ -55,6 +55,11 @@ public class MultiPlayerAvatar : MonoBehaviour
         targetMaskRot = Quaternion.Euler(maskRot, 0, 0);
     }
 
+    public void SetVisible(bool visible)
+    {
+        enabled = visible;
+    }
+
     private void ResetStarts()
     {
         startPosition = transform.position;

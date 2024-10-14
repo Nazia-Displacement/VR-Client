@@ -33,7 +33,7 @@ public class MyPlayerController : MonoBehaviour
 
     void Update()
     {
-        HandleMouseLook();
+        if(gameObject.activeInHierarchy) HandleMouseLook();
         nextUpdate += Time.deltaTime;
         if(nextUpdate > updateEvery)
         {
@@ -44,7 +44,7 @@ public class MyPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleMovement();
+        if (gameObject.activeInHierarchy) HandleMovement();
     }
 
     private void HandleMouseLook()
