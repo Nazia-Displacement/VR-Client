@@ -100,7 +100,7 @@ public class KinectManager : MonoBehaviour
 
     void AlignWithFloorPlane()
     {
-        if (floorClipPlane != UnityEngine.Vector4.zero)
+        if (floorClipPlane != Vector4.zero)
         {
             Vector3 kinectFloorNormal = new(floorClipPlane.x, floorClipPlane.y, floorClipPlane.z);
             Quaternion rotationToAlign = Quaternion.FromToRotation(kinectFloorNormal, Vector3.up);
