@@ -22,6 +22,7 @@ public class ConnectionManager : MonoBehaviour
     public MultiPlayerAvatar avatarPrefab;
 
     public Dictionary<string, MultiPlayerAvatar> avatars = new();
+    public Dictionary<string, Color> affectingLights = new();
 
     public Camera gameCam;
     public Camera kinectCam;
@@ -70,6 +71,10 @@ public class ConnectionManager : MonoBehaviour
             {
                 Destroy(avatars[id].gameObject);
                 avatars.Remove(id);
+            }
+            if (affectingLights.ContainsKey(id))
+            {
+                affectingLights.Remove(id);
             }
         });
 
@@ -136,7 +141,7 @@ public class ConnectionManager : MonoBehaviour
         socket.Instance.Emit("unity-panel-update-request", value.ToString(), true);
     }
 
-    public void SendPosition(float x, float y, float z, float xRot, float yRot)
+    public void SendPosition(float x, float y, float z, float xRot, float yRot, bool affectingLight)
     {
         // Step 1: Convert the SocketID string to a byte array
         string socketID = socket.Instance.SocketID; // Get the SocketID
@@ -150,9 +155,10 @@ public class ConnectionManager : MonoBehaviour
         byte[] xRotBytes = BitConverter.GetBytes(xRot);
         byte[] yRotBytes = BitConverter.GetBytes(yRot);
         byte[] camMode = BitConverter.GetBytes(gameCam.enabled);
+        byte[] isAffectingLights = BitConverter.GetBytes(affectingLight);
 
         // Step 3: Combine the id byte array with the other byte arrays into one larger array
-        int totalLength = idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length + camMode.Length;
+        int totalLength = idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length + camMode.Length + isAffectingLights.Length;
         byte[] allBytes = new byte[totalLength];
 
         Buffer.BlockCopy(idBytes, 0, allBytes, 0, idBytes.Length);
@@ -162,6 +168,7 @@ public class ConnectionManager : MonoBehaviour
         Buffer.BlockCopy(xRotBytes, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length, xRotBytes.Length);
         Buffer.BlockCopy(yRotBytes, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length, yRotBytes.Length);
         Buffer.BlockCopy(camMode, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length, camMode.Length);
+        Buffer.BlockCopy(isAffectingLights, 0, allBytes, idBytes.Length + xBytes.Length + yBytes.Length + zBytes.Length + xRotBytes.Length + yRotBytes.Length + camMode.Length, isAffectingLights.Length);
 
         // Step 4: Compress the combined byte array
         byte[] compressedBytes;
@@ -206,24 +213,33 @@ public class ConnectionManager : MonoBehaviour
         string jsonString = Encoding.UTF8.GetString(decompressedBytes);
 
         // Step 4: Deserialize the JSON string back into a dictionary of player positions
-        var players = JsonConvert.DeserializeObject<Dictionary<string, PlayerPosition>>(jsonString);
+        var players = JsonConvert.DeserializeObject<Dictionary<string, PlayerData>>(jsonString);
 
         // Step 5: Update the game world with all the player positions
         foreach (var kvp in players)
         {
-            if (kvp.Key == socket.Instance.SocketID) continue;
-
             string socketID = kvp.Key;
-            PlayerPosition position = kvp.Value;
+            PlayerData playerData = kvp.Value;
+
+            if(playerData.affectingLights && !affectingLights.ContainsKey(socketID))
+            {
+                affectingLights.Add(socketID, new Color32(playerData.r, playerData.g, playerData.b, 255));
+            }
+            if (!playerData.affectingLights && affectingLights.ContainsKey(socketID))
+            {
+                affectingLights.Remove(socketID);
+            }
+
+            if (kvp.Key == socket.Instance.SocketID) continue;
 
             if (avatars.ContainsKey(socketID))
             {
-                avatars[socketID].SetTargets(new Vector3(position.x, position.y, position.z), position.xRot, position.yRot);
-                avatars[socketID].SetVisible(position.display);
+                avatars[socketID].SetTargets(new Vector3(playerData.x, playerData.y, playerData.z), playerData.xRot, playerData.yRot);
+                avatars[socketID].SetVisible(playerData.display);
             }
             else
             {
-                avatars.Add(socketID, Instantiate(avatarPrefab, new Vector3(position.x, position.y, position.z), Quaternion.identity));
+                avatars.Add(socketID, Instantiate(avatarPrefab, new Vector3(playerData.x, playerData.y, playerData.z), Quaternion.identity));
             }
         }
     }
@@ -312,7 +328,7 @@ public class ConnectionManager : MonoBehaviour
 
 }
 
-public class PlayerPosition
+public class PlayerData
 {
     public float x { get; set; }
     public float y { get; set; }
@@ -320,4 +336,8 @@ public class PlayerPosition
     public float xRot { get; set; }
     public float yRot { get; set; }
     public bool display { get; set; }
+    public byte r { get; set; }
+    public byte g { get; set; }
+    public byte b { get; set; }
+    public bool affectingLights { get; set; }
 }

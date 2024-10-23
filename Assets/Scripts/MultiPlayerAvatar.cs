@@ -15,6 +15,7 @@ public class MultiPlayerAvatar : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion startMaskRotation;
     private float timeElapsed;
+    private Color32 color = new();
 
     void Start()
     {
@@ -58,6 +59,14 @@ public class MultiPlayerAvatar : MonoBehaviour
     public void SetVisible(bool visible)
     {
         enabled = visible;
+    }
+
+    public void SetColor(byte r, byte g, byte b)
+    {
+        color.r = r; 
+        color.g = g;
+        color.b = b;
+        color.a = 255;
     }
 
     private void ResetStarts()

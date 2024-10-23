@@ -21,6 +21,8 @@ public class MyPlayerController : MonoBehaviour
     private float nextUpdate = 0;
     private float updateEvery = 0.08f;
 
+    private bool affectingLight = false;
+
     void Start()
     {
         if (characterController == null)
@@ -38,8 +40,18 @@ public class MyPlayerController : MonoBehaviour
         if(nextUpdate > updateEvery)
         {
             nextUpdate = 0;
-            ConnectionManager.instance.SendPosition(transform.position.x, transform.position.y, transform.position.z, cam.transform.eulerAngles.x, transform.eulerAngles.y);
+            ConnectionManager.instance.SendPosition(transform.position.x, transform.position.y, transform.position.z, cam.transform.eulerAngles.x, transform.eulerAngles.y, affectingLight);
         }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        affectingLight = true;
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        affectingLight = false;
     }
 
     private void FixedUpdate()
