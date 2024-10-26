@@ -44,8 +44,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030635741597182}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 8.3131075, z: 0}
-  m_Size: 17.80559
+  m_LocalReferencePoint: {x: 0, y: 8.128771, z: 0}
+  m_Size: 18.174263
   m_FadeMode: 2
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
@@ -239,7 +239,7 @@ MeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.6038875
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
@@ -313,7 +313,7 @@ BillboardRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 0.38160095
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0

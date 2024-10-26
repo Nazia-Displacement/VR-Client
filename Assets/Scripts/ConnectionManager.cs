@@ -27,7 +27,7 @@ public class ConnectionManager : MonoBehaviour
     public Camera gameCam;
     public Camera kinectCam;
 
-    private readonly bool live = false;
+    private readonly bool live = true;
     private GameControls gameControls;
 
     [Serializable]
