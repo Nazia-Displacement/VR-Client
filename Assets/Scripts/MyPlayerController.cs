@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class MyPlayerController : MonoBehaviour
@@ -6,6 +7,7 @@ public class MyPlayerController : MonoBehaviour
     public CharacterController characterController;
     public PlayerControls playerControls;
     public Camera cam;
+    public ParticleSystem myParticleSystem;
 
     private float gravity = -9.8f;
     private float moveSpeed = 5.5f;
@@ -20,6 +22,7 @@ public class MyPlayerController : MonoBehaviour
 
     private float nextUpdate = 0;
     private float updateEvery = 0.08f;
+    private Material lightMat;
 
     private bool affectingLight = false;
 
@@ -31,6 +34,7 @@ public class MyPlayerController : MonoBehaviour
         playerControls = new PlayerControls();
         playerControls.Enable();
         Cursor.lockState = CursorLockMode.Locked;
+        lightMat = myParticleSystem.GetComponent<ParticleSystemRenderer>().material;
     }
 
     void Update()
@@ -42,6 +46,14 @@ public class MyPlayerController : MonoBehaviour
             nextUpdate = 0;
             ConnectionManager.instance.SendPosition(transform.position.x, transform.position.y, transform.position.z, cam.transform.eulerAngles.x, transform.eulerAngles.y, affectingLight);
         }
+    }
+
+    public void SetColor(byte r, byte g, byte b)
+    {
+        Color32 col = new Color32(r, g, b, 255);
+        ParticleSystem.MainModule m = myParticleSystem.main;
+        m.startColor = new ParticleSystem.MinMaxGradient(col);
+        lightMat.SetColor("_EmissionColor", col);
     }
 
     public void OnTriggerEnter(Collider other)

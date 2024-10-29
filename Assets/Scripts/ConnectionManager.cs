@@ -27,6 +27,8 @@ public class ConnectionManager : MonoBehaviour
     public Camera gameCam;
     public Camera kinectCam;
 
+    public MyPlayerController player;
+
     private readonly bool live = true;
     private GameControls gameControls;
 
@@ -124,7 +126,6 @@ public class ConnectionManager : MonoBehaviour
         {
             data = data.Replace(@"\", "");
             KinectTransform kt = JsonConvert.DeserializeObject<KinectTransform>(data);
-            Debug.Log($"Data: Pos: {kt.position} Rot: {kt.rotation}");
             Vector3 kpos = kinectManager.transform.position;
             kpos.x = kt.position.x;
             kpos.z = kt.position.y;
@@ -230,16 +231,22 @@ public class ConnectionManager : MonoBehaviour
                 affectingLights.Remove(socketID);
             }
 
-            if (kvp.Key == socket.Instance.SocketID) continue;
+            if (kvp.Key == socket.Instance.SocketID)
+            {
+                player.SetColor(playerData.r, playerData.g, playerData.b);
+                continue;
+            }
 
             if (avatars.ContainsKey(socketID))
             {
                 avatars[socketID].SetTargets(new Vector3(playerData.x, playerData.y, playerData.z), playerData.xRot, playerData.yRot);
                 avatars[socketID].SetVisible(playerData.display);
+                avatars[socketID].SetColor(playerData.r, playerData.g, playerData.b);
             }
             else
             {
                 avatars.Add(socketID, Instantiate(avatarPrefab, new Vector3(playerData.x, playerData.y, playerData.z), Quaternion.identity));
+                avatars[socketID].SetColor(playerData.r, playerData.g, playerData.b);
             }
         }
     }

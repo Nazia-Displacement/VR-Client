@@ -6,6 +6,7 @@ public class MultiPlayerAvatar : MonoBehaviour
 {
     public GameObject mask;
     public string sid;
+    public ParticleSystem myParticleSystem;
 
     private Vector3 targetPos;
     private Quaternion targetRot;
@@ -16,6 +17,7 @@ public class MultiPlayerAvatar : MonoBehaviour
     private Quaternion startMaskRotation;
     private float timeElapsed;
     private Color32 color = new();
+    private Material lightMat;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class MultiPlayerAvatar : MonoBehaviour
         targetPos = transform.position;
         targetRot = transform.rotation;
         targetMaskRot = mask.transform.localRotation;
+        lightMat = myParticleSystem.GetComponent<ParticleSystemRenderer>().material;
     }
 
     void Update()
@@ -35,9 +38,9 @@ public class MultiPlayerAvatar : MonoBehaviour
             float t = timeElapsed / duration;
 
             // Lerp position and rotation
-            transform.position = Vector3.Lerp(startPosition, targetPos, t);
-            transform.rotation = Quaternion.Lerp(startRotation, targetRot, t);
-            mask.transform.localRotation = Quaternion.Lerp(startMaskRotation, targetMaskRot, t);
+            transform.position = Vector3.Lerp(transform.position, targetPos, t);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, t);
+            mask.transform.localRotation = Quaternion.Lerp(mask.transform.localRotation, targetMaskRot, t);
         }
         else
         {
@@ -46,6 +49,10 @@ public class MultiPlayerAvatar : MonoBehaviour
             transform.rotation = targetRot;
             mask.transform.localRotation = targetMaskRot;
         }
+
+        ParticleSystem.MainModule m = myParticleSystem.main;
+        m.startColor = new ParticleSystem.MinMaxGradient(color);
+        lightMat.SetColor("_EmissionColor", color);
     }
 
     public void SetTargets(Vector3 targetPos, float maskRot, float targetRot)
