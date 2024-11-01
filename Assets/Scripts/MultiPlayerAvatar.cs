@@ -5,6 +5,8 @@ using UnityEngine;
 public class MultiPlayerAvatar : MonoBehaviour
 {
     public GameObject mask;
+    public GameObject[] maskGraphics;
+    public GameObject textCube;
     public string sid;
     public ParticleSystem myParticleSystem;
 
@@ -18,6 +20,10 @@ public class MultiPlayerAvatar : MonoBehaviour
     private float timeElapsed;
     private Color32 color = new();
     private Material lightMat;
+    private Renderer textCub_r;
+    private Renderer mask_r;
+
+    private int currentMask = 0;
 
     void Start()
     {
@@ -26,6 +32,8 @@ public class MultiPlayerAvatar : MonoBehaviour
         targetRot = transform.rotation;
         targetMaskRot = mask.transform.localRotation;
         lightMat = myParticleSystem.GetComponent<ParticleSystemRenderer>().material;
+        myParticleSystem.Clear();
+        myParticleSystem.Play();
     }
 
     void Update()
@@ -53,6 +61,18 @@ public class MultiPlayerAvatar : MonoBehaviour
         ParticleSystem.MainModule m = myParticleSystem.main;
         m.startColor = new ParticleSystem.MinMaxGradient(color);
         lightMat.SetColor("_EmissionColor", color);
+
+        if (mask_r != null && mask_r.material != null)
+        {
+            // Change the Face Color
+            mask_r.material.SetColor("_BaseColor", color);
+        }
+
+        if (textCub_r != null && textCub_r.material != null)
+        {
+            // Change the Face Color
+            textCub_r.material.SetColor("_FaceColor", color);
+        }
     }
 
     public void SetTargets(Vector3 targetPos, float maskRot, float targetRot)
@@ -74,6 +94,20 @@ public class MultiPlayerAvatar : MonoBehaviour
         color.g = g;
         color.b = b;
         color.a = 255;
+    }
+
+    public void SetMask(int maskIndex)
+    {
+        if (maskIndex < maskGraphics.Length && maskIndex >= 0 && currentMask != maskIndex)
+        {
+            for(int i = 0; i < maskGraphics.Length; i++)
+            {
+                maskGraphics[i].SetActive(false);
+            }
+            maskGraphics[maskIndex].SetActive(true);
+            mask_r = maskGraphics[maskIndex].GetComponent<Renderer>();
+            textCub_r = textCube.GetComponent<Renderer>();
+        }
     }
 
     private void ResetStarts()

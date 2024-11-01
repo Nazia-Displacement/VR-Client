@@ -242,11 +242,14 @@ public class ConnectionManager : MonoBehaviour
                 avatars[socketID].SetTargets(new Vector3(playerData.x, playerData.y, playerData.z), playerData.xRot, playerData.yRot);
                 avatars[socketID].SetVisible(playerData.display);
                 avatars[socketID].SetColor(playerData.r, playerData.g, playerData.b);
+                avatars[socketID].SetMask(playerData.mask);
             }
             else
             {
                 avatars.Add(socketID, Instantiate(avatarPrefab, new Vector3(playerData.x, playerData.y, playerData.z), Quaternion.identity));
+                avatars[socketID].SetVisible(playerData.display);
                 avatars[socketID].SetColor(playerData.r, playerData.g, playerData.b);
+                avatars[socketID].SetMask(playerData.mask);
             }
         }
     }
@@ -347,4 +350,5 @@ public class PlayerData
     public byte g { get; set; }
     public byte b { get; set; }
     public bool affectingLights { get; set; }
+    public byte mask { get; set; }
 }
