@@ -62,15 +62,15 @@ public class MultiPlayerAvatar : MonoBehaviour
         m.startColor = new ParticleSystem.MinMaxGradient(color);
         lightMat.SetColor("_EmissionColor", color);
 
-        if (mask_r != null && mask_r.material != null)
-        {
+        //if (mask_r != null && mask_r.material != null)
+        //{
             // Change the Face Color
-            mask_r.material.SetColor("_BaseColor", color);
-        }
+            //mask_r.material.SetColor("_BaseColor", color);
+        //}
 
         if (textCub_r != null && textCub_r.material != null)
         {
-            // Change the Face Color
+            // Change the Cube Color
             textCub_r.material.SetColor("_FaceColor", color);
         }
     }
