@@ -65,7 +65,6 @@ public class PointCloudMultiPlayerAvatar : MonoBehaviour
         m.startColor = new ParticleSystem.MinMaxGradient(color);
         lightMat.SetColor("_EmissionColor", color);
         myVisualEffect.SetVector4("ParticleColor", new Vector4(color.r / 255f, color.g / 255f, color.b / 255f, 1.0f));
-        
     }
 
     private void SetMovementAnimation(float deg)
@@ -89,7 +88,8 @@ public class PointCloudMultiPlayerAvatar : MonoBehaviour
         ResetStarts();
         this.targetPos = targetPos;
         this.targetRot = Quaternion.Euler(0, targetRot, 0);
-        targetMaskRot = Quaternion.Euler(maskRot, 0, 0);
+        maskRot = (maskRot > 100) ? maskRot - 360 : maskRot;
+        targetMaskRot = Quaternion.Euler(Mathf.Clamp(maskRot, -30, 30), 0, 0);
         if(targetPos != transform.position)
             SetMovementAnimation((Vector3.SignedAngle(transform.forward, (targetPos - transform.position).normalized, Vector3.up) + 360) % 360);
     }
@@ -115,7 +115,7 @@ public class PointCloudMultiPlayerAvatar : MonoBehaviour
             {
                 maskGraphics[i].SetActive(false);
             }
-            maskGraphics[maskIndex].SetActive(true);
+            //maskGraphics[maskIndex].SetActive(true);
         }
     }
 

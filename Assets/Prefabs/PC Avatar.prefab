@@ -372,6 +372,7 @@ MonoBehaviour:
   sid: 
   myParticleSystem: {fileID: 7914354987585286832}
   myVisualEffect: {fileID: 4474029002785165183}
+  myVisualEffect2: {fileID: 0}
   myAnimator: {fileID: 6846576669020219406}
 --- !u!1 &1466709923734393017
 GameObject:
@@ -1747,7 +1748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1914381941352919967
 Transform:
   m_ObjectHideFlags: 0
@@ -1786,7 +1787,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -840037777384891287, guid: 8ee214b8817c6d544bbfc9c85647522b, type: 3}
+  - {fileID: 2100000, guid: 0fe44afae3ff8c0459ec58cfb0474bce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3092,7 +3093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cb77fb95e0abef54d996a7464bb27636, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
