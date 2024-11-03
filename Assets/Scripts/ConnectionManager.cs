@@ -19,9 +19,9 @@ public class ConnectionManager : MonoBehaviour
     float currentReconnectTimer = 0f;
     // Start is called before the first frame update
 
-    public MultiPlayerAvatar avatarPrefab;
+    public PointCloudMultiPlayerAvatar avatarPrefab;
 
-    public Dictionary<string, MultiPlayerAvatar> avatars = new();
+    public Dictionary<string, PointCloudMultiPlayerAvatar> avatars = new();
     public Dictionary<string, Color> affectingLights = new();
 
     public Camera gameCam;
@@ -155,7 +155,7 @@ public class ConnectionManager : MonoBehaviour
         byte[] zBytes = BitConverter.GetBytes(z);
         byte[] xRotBytes = BitConverter.GetBytes(xRot);
         byte[] yRotBytes = BitConverter.GetBytes(yRot);
-        byte[] camMode = BitConverter.GetBytes(gameCam.enabled);
+        byte[] camMode = BitConverter.GetBytes(gameCam.gameObject.activeInHierarchy);
         byte[] isAffectingLights = BitConverter.GetBytes(affectingLight);
 
         // Step 3: Combine the id byte array with the other byte arrays into one larger array

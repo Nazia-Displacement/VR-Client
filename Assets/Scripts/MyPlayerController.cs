@@ -39,9 +39,11 @@ public class MyPlayerController : MonoBehaviour
 
     void Update()
     {
-        if(gameObject.activeInHierarchy) HandleMouseLook();
+        if (ConnectionManager.instance.gameCam.gameObject.activeInHierarchy)
+            HandleMouseLook();
+
         nextUpdate += Time.deltaTime;
-        if(nextUpdate > updateEvery)
+        if (nextUpdate > updateEvery)
         {
             nextUpdate = 0;
             ConnectionManager.instance.SendPosition(transform.position.x, transform.position.y, transform.position.z, cam.transform.eulerAngles.x, transform.eulerAngles.y, affectingLight);
@@ -68,7 +70,8 @@ public class MyPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (gameObject.activeInHierarchy) HandleMovement();
+        if(ConnectionManager.instance.gameCam.gameObject.activeInHierarchy)
+            HandleMovement();
     }
 
     private void HandleMouseLook()
