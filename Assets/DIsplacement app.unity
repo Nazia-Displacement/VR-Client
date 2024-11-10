@@ -4640,7 +4640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1340735298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6323,7 +6323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!20 &1885444594
 Camera:
   m_ObjectHideFlags: 0
@@ -13687,7 +13687,7 @@ GameObject:
   - component: {fileID: 5427903824284291970}
   - component: {fileID: 3314979365227331564}
   - component: {fileID: 5427903824284291971}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13704,7 +13704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652939994516}
   - component: {fileID: 919132148747804463}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Doorway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13771,7 +13771,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -13823,7 +13823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333051780397786657}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: G_2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13843,13 +13843,13 @@ GameObject:
   - component: {fileID: 200178795074801974}
   - component: {fileID: 5534945100497901663}
   - component: {fileID: 2708177453036562193}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KinectCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2065748744385051682
 Transform:
   m_ObjectHideFlags: 0
@@ -13970,7 +13970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -13985,7 +13985,7 @@ MonoBehaviour:
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
-  m_Dithering: 1
+  m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
   m_AllowHDROutput: 1
@@ -14014,7 +14014,7 @@ GameObject:
   - component: {fileID: 5948675469370599971}
   - component: {fileID: 8739902862028885416}
   - component: {fileID: 8800836474354567380}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14053,7 +14053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2065748744385051682}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: G_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
