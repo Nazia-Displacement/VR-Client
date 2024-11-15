@@ -9,3 +9,10 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142076
+  packageName: 'Conifers [BOTD]'
+  packageVersion: 2.01
+  assetPath: Assets/Forst/Conifers [BOTD]/Installer/Editor/ConifersInstaller.cs
+  uploadId: 649803

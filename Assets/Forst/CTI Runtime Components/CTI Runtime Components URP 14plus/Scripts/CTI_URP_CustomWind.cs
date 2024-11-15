@@ -19,13 +19,10 @@ namespace CTI {
 	    private int CTIWindPID;
         private int CTITurbulencedPID;
 
-        private Transform trans;
-
         void Init () {
 			m_WindZone = GetComponent<WindZone>();
             CTIWindPID = Shader.PropertyToID("_CTI_SRP_Wind");
             CTITurbulencedPID = Shader.PropertyToID("_CTI_SRP_Turbulence");
-            trans = this.transform;
         }
 
 		void OnValidate () {
@@ -36,7 +33,7 @@ namespace CTI {
 			if (!init) {
 				Init ();
 			}
-			WindDirection = trans.forward;
+			WindDirection = transform.forward;
 
 			WindStrength = m_WindZone.windMain;
 			WindStrength += m_WindZone.windPulseMagnitude * (1.0f + Mathf.Sin(Time.time * m_WindZone.windPulseFrequency) + 1.0f + Mathf.Sin(Time.time * m_WindZone.windPulseFrequency * 3.0f) ) * 0.5f;
@@ -45,7 +42,8 @@ namespace CTI {
 
             Shader.SetGlobalVector(CTIWindPID, new Vector4(WindDirection.x, WindDirection.y, WindDirection.z, WindStrength) );
             Shader.SetGlobalFloat(CTITurbulencedPID, WindTurbulence);
-
-		}
+            Shader.SetGlobalVector("_ST_WindVector", new Vector4(WindDirection.x, WindDirection.y, WindDirection.z, WindStrength));
+            Shader.SetGlobalFloat("_WindQuality", 1); // Sets the wind quality globally
+        }
 	}
 }

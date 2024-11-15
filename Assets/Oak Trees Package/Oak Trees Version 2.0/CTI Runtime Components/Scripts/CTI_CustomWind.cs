@@ -20,6 +20,7 @@ namespace CTI {
 	    void Init () {
 			m_WindZone = GetComponent<WindZone>();
 			TerrainLODWindPID = Shader.PropertyToID("_TerrainLODWind");
+			init = true;
 		}
 
 		void OnValidate () {
@@ -30,7 +31,7 @@ namespace CTI {
 			if (!init) {
 				Init ();
 			}
-			WindDirection = this.transform.forward;
+			WindDirection = transform.forward;
 
 			if(m_WindZone == null) {
 				m_WindZone = GetComponent<WindZone>();

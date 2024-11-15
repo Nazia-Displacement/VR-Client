@@ -28,13 +28,15 @@ Material:
   - EFFECT_BUMP
   - EFFECT_HUE_VARIATION
   - GEOM_TYPE_BRANCH
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -55,9 +57,9 @@ Material:
     m_Floats:
     - _Cull: 2
     - _Cutoff: 0.33
-    - _WindQuality: 4
+    - _WindQuality: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
+    - _HueVariation: {r: 1, g: 0, b: 0, a: 0.1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

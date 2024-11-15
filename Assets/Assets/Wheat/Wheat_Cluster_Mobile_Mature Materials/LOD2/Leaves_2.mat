@@ -12,7 +12,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - EFFECT_BUMP
   - EFFECT_HUE_VARIATION
   - GEOM_TYPE_LEAF
   m_InvalidKeywords: []
@@ -42,10 +41,10 @@ Material:
     m_Floats:
     - _Cull: 0
     - _Cutoff: 0.33
-    - _WindQuality: 4
+    - _WindQuality: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
+    - _HueVariation: {r: 1, g: 0, b: 0, a: 0.1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6845864129344220590

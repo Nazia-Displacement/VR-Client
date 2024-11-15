@@ -10,6 +10,11 @@ SpeedTreeImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Branches_0
+    second: {fileID: 2100000, guid: 84d03b98c669bc149a34f9a71a1ad274, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Branches_0_LOD0
     second: {fileID: 2100000, guid: 7d8808d325ca6ab468e08aa678bba1b6, type: 2}
   - first:
@@ -22,6 +27,11 @@ SpeedTreeImporter:
       assembly: UnityEngine.CoreModule
       name: Branches_0_LOD2
     second: {fileID: 2100000, guid: a77c63859378a4244b6f5133ea0e8c0e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fronds_1
+    second: {fileID: 2100000, guid: 7f7a7620c07b23c49a255d3d7497c56b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -40,6 +50,11 @@ SpeedTreeImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Leaves_2
+    second: {fileID: 2100000, guid: 8d22ab75ff910bf41b644ae9f670db62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Leaves_2_LOD0
     second: {fileID: 2100000, guid: c8cb8fba01e09b64bbefd8c25dfe9651, type: 2}
   - first:
@@ -52,14 +67,23 @@ SpeedTreeImporter:
       assembly: UnityEngine.CoreModule
       name: Leaves_2_LOD2
     second: {fileID: 2100000, guid: 5481769f3e75b3641ba8ac1f823c7a8a, type: 2}
-  serializedVersion: 6
+  serializedVersion: 7
   mainColor: {r: 1, g: 1, b: 1, a: 1}
-  hueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
+  hueVariation: {r: 1, g: 0, b: 0, a: 0.1}
   alphaTestRef: 0.33
+  enableHueVariation: 1
+  enableBumpMapping: 1
+  enableSubsurfaceScattering: 1
   bestWindQuality: 4
+  selectedWindQuality: 1
+  enableShadowCasting: 0
+  enableShadowReceiving: 1
+  enableLightProbes: 1
+  reflectionProbeEnumValue: 1
   hasBillboard: 1
   lODSettings:
-  - height: 0.49693507
+  - enableSettingOverride: 0
+    height: 0.999
     castShadows: 1
     receiveShadows: 1
     useLightProbes: 1
@@ -67,42 +91,48 @@ SpeedTreeImporter:
     enableBump: 1
     enableHue: 1
     enableSubsurface: 0
-    windQuality: 4
-  - height: 0.249
-    castShadows: 1
+    windQuality: 1
+  - enableSettingOverride: 0
+    height: 0.79931957
+    castShadows: 0
     receiveShadows: 1
     useLightProbes: 1
     reflectionProbeUsage: 1
     enableBump: 1
     enableHue: 1
     enableSubsurface: 0
-    windQuality: 3
-  - height: 0.11509407
-    castShadows: 1
+    windQuality: 1
+  - enableSettingOverride: 0
+    height: 0.15308069
+    castShadows: 0
     receiveShadows: 1
     useLightProbes: 1
     reflectionProbeUsage: 1
-    enableBump: 1
+    enableBump: 0
     enableHue: 1
     enableSubsurface: 0
-    windQuality: 2
-  - height: 0.0580188
+    windQuality: 1
+  - enableSettingOverride: 1
+    height: 0.115901574
     castShadows: 0
     receiveShadows: 0
     useLightProbes: 0
     reflectionProbeUsage: 0
     enableBump: 0
-    enableHue: 1
+    enableHue: 0
     enableSubsurface: 0
-    windQuality: 1
-  enableSmoothLODTransition: 1
-  animateCrossFading: 1
+    windQuality: 0
+  enableSmoothLODTransition: 0
+  animateCrossFading: 0
   billboardTransitionCrossFadeWidth: 0.25
   fadeOutWidth: 0.25
   scaleFactor: 0.25
-  motionVectorModeEnumValue: -1
+  unitConversionEnumValue: 4
+  motionVectorModeEnumValue: 2
+  generateColliders: 0
+  generateRigidbody: 0
   materialVersion: 3
-  materialLocation: 0
+  materialLocation: 1
   fileIDType: 0
   userData: 
   assetBundleName: 

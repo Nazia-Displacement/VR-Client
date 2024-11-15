@@ -2530,6 +2530,10 @@ PrefabInstance:
       value: Mask5
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bd21db73f80af3a47baf70341ef599ae, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bd21db73f80af3a47baf70341ef599ae, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2615,6 +2619,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bb1bd3aca0902ae41b2a242c5e69ef6a, type: 3}
       propertyPath: m_Name
       value: Mask2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1bd3aca0902ae41b2a242c5e69ef6a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bb1bd3aca0902ae41b2a242c5e69ef6a, type: 3}
       propertyPath: m_IsActive
@@ -2704,6 +2712,10 @@ PrefabInstance:
       value: Mask3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d68523575c9eb9749aaedfa4848d1807, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d68523575c9eb9749aaedfa4848d1807, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2785,6 +2797,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0bde2077eb280ca48b1892815d71ba17, type: 3}
       propertyPath: m_Name
       value: Mask4
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0bde2077eb280ca48b1892815d71ba17, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0bde2077eb280ca48b1892815d71ba17, type: 3}
       propertyPath: m_IsActive
@@ -2874,6 +2890,10 @@ PrefabInstance:
       value: Mask1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cb77fb95e0abef54d996a7464bb27636, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cb77fb95e0abef54d996a7464bb27636, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2915,6 +2935,10 @@ PrefabInstance:
     - target: {fileID: 4070836614378262398, guid: c184f27d89dcc1340acc1d02ca9a888e, type: 3}
       propertyPath: m_Name
       value: Particle System
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070836614378262398, guid: c184f27d89dcc1340acc1d02ca9a888e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8265386730081581865, guid: c184f27d89dcc1340acc1d02ca9a888e, type: 3}
       propertyPath: m_LocalPosition.x

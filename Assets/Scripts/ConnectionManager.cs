@@ -46,6 +46,7 @@ public class ConnectionManager : MonoBehaviour
     }
     void Start()
     {
+        Shader.SetGlobalFloat(Shader.PropertyToID("_WindEnabled"), 1.0f); // Enable wind
         instance = this;
         socket = gameObject.AddComponent<SocketIOCommunicator>();
         gameControls = new GameControls();
@@ -271,6 +272,11 @@ public class ConnectionManager : MonoBehaviour
             gameCam.gameObject.SetActive(!gameCam.gameObject.activeInHierarchy);
             kinectCam.gameObject.SetActive(!gameCam.gameObject.activeInHierarchy);
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        Shader.SetGlobalFloat(Shader.PropertyToID("_WindEnabled"), 0.0f); // Enable wind
     }
 
     private static void DecompressAndExtractFrames(
